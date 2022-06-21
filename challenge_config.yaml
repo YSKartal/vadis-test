@@ -58,18 +58,22 @@ challenge_phases:
         description: Sample
         type: text
         required: False
+        is_visible: False
       - name: SingleOptionAttribute
         description: Sample
         type: radio
         options: ["A", "B", "C"]
+        is_visible: False
       - name: MultipleChoiceAttribute
         description: Sample
         type: checkbox
         options: ["alpha", "beta", "gamma"]
+        is_visible: False
       - name: TrueFalseField
         description: Sample
         type: boolean
         required: False
+        is_visible: False
     max_submissions_per_day: 5
     max_submissions_per_month: 50
     max_submissions: 50
