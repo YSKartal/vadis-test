@@ -44,6 +44,32 @@ challenge_phases:
     end_date: 2099-04-25 23:59:59
     test_annotation_file: annotations/test_annotations_devsplit.json
     codename: dev
+    default_submission_meta_attributes:
+      - name: method_name
+        is_visible: False
+      - name: method_description
+        is_visible: False
+      - name: project_url
+        is_visible: False
+      - name: publication_url
+        is_visible: False
+    submission_meta_attributes:
+      - name: TextAttribute
+        description: Sample
+        type: text
+        required: False
+      - name: SingleOptionAttribute
+        description: Sample
+        type: radio
+        options: ["A", "B", "C"]
+      - name: MultipleChoiceAttribute
+        description: Sample
+        type: checkbox
+        options: ["alpha", "beta", "gamma"]
+      - name: TrueFalseField
+        description: Sample
+        type: boolean
+        required: False
     max_submissions_per_day: 5
     max_submissions_per_month: 50
     max_submissions: 50
