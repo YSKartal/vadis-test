@@ -1,9 +1,9 @@
 import random
-from sklearn.metrics import precision_score, recall_score, f1_score
-from argparse import ArgumentParser
+import pytrec_eval
 import os
 import json
-from typing import List
+from typing import Dict, Tuple, List
+from argparse import ArgumentParser
 
 DEFAULT_METRICS = ["map@20,50", "p@1,3,5,10,20", "r@1,3,5,10,20", "rprec"]
 
