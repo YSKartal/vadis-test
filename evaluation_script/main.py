@@ -5,7 +5,27 @@ import os
 import json
 from typing import List
 
-METRICS = {"f1": f1_score, "p": precision_score, "r": recall_score}
+DEFAULT_METRICS = ["map@20,50", "p@1,3,5,10,20", "r@1,3,5,10,20", "rprec"]
+
+def _evaluate(
+    qrels: Dict[str, Dict[str, int]], 
+    results: Dict[str, Dict[str, float]], 
+    measures: Dict[str, str]
+    ) -> Tuple[Dict[str, float], Dict[str, float], Dict[str, float], Dict[str, float]]:
+        
+        evaluator = pytrec_eval.RelevanceEvaluator(qrels, [k for _,k in measures.items()])
+        scores = evaluator.evaluate(results)
+
+        metrics = {_k:0.0 for _k,__ in scores[list(scores.keys())[0]].items()}
+
+        for _,query_scores in scores.items():
+            for score_name,score in query_scores.items():
+                metrics[score_name] += score
+
+        for k,v in metrics.items():
+            metrics[k] = round(v/len(scores),5)
+
+        return metrics
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
     print("Starting Evaluation.....")
@@ -48,24 +68,37 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
     
     with open(user_submission_file, "r") as f:
-        pred_json = json.load(f)
+        run = json.load(f)
 
     with open(test_annotation_file, "r") as f:
-        true_json = json.load(f)
-
-    pred_keys = sorted(list(pred_json.keys()))
-    true_keys = sorted(list(true_json.keys()))
-
-    assert pred_keys == true_keys
-
-    pred = [pred_json[k] for k in pred_keys]
-    true = [true_json[k] for k in true_keys]
+        qrels = json.load(f)
 
     metrics = {}
-    
-    for name in METRICS:
-        score = METRICS[name](y_pred=pred, y_true=true, average=avg, zero_division=False)
-        metrics[name] = score
+    for m in DEFAULT_METRICS:
+        parts = m.split("@")
+        if len(parts) == 2:
+            name = ""
+            ks = None
+
+            try:
+                name, ks = parts[0].lower(), parts[1]
+            except:
+                print(f"Invalid format for metric: {m}")
+
+            if name in PYTREC_METRIC_MAPPING:
+                _metric = PYTREC_METRIC_MAPPING[name]+"."+ks
+                metrics[name] = _metric
+
+        elif len(parts) == 1:
+            name = m.lower()
+
+            if name in PYTREC_METRIC_MAPPING:
+                _metric = PYTREC_METRIC_MAPPING[name]
+                metrics[name] = _metric
+
+    scores = _evaluate(qrels, run, metrics)
+    formatted_scores = {k.replace("_","@"): v for k,v in scores.items()}
+    print(formatted_scores)
     
     print(metrics)
     
@@ -76,9 +109,9 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         output["result"] = [
             {
                 "train_split": {
-                    "Metric1": metrics["f1"],
-                    "Metric2": metrics["p"],
-                    "Metric3": metrics["r"],
+                    "Metric1": metrics["recall@1"],
+                    "Metric2": metrics["recall@3"],
+                    "Metric3": metrics["recall@5"],
                     "Total": random.randint(0, 99),
                 }
             }
@@ -99,9 +132,9 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             },
             {
                 "test_split": {
-                    "Metric1": random.randint(0, 99),
-                    "Metric2": random.randint(0, 99),
-                    "Metric3": random.randint(0, 99),
+                    "Metric1": metrics["recall@1"],
+                    "Metric2": metrics["recall@3"],
+                    "Metric3": metrics["recall@5"],
                     "Total": random.randint(0, 99),
                 }
             },
