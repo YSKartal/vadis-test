@@ -3,4 +3,4 @@ grpcio-tools==1.22.0
 gym==0.15.4
 requests==2.25.0
 urllib3==1.26.5
-pytrec-eval==0.5
+pytrec_eval==0.5
