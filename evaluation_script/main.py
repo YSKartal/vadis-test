@@ -1,5 +1,5 @@
 import random
-from pytrec_eval import RelevanceEvaluator
+import pytrec_eval
 import os
 import json
 from typing import Dict, Tuple, List
@@ -13,7 +13,7 @@ def _evaluate(
     measures: Dict[str, str]
     ) -> Tuple[Dict[str, float], Dict[str, float], Dict[str, float], Dict[str, float]]:
         
-        evaluator = RelevanceEvaluator(qrels, [k for _,k in measures.items()])
+        evaluator = pytrec_eval.RelevanceEvaluator(qrels, [k for _,k in measures.items()])
         scores = evaluator.evaluate(results)
 
         metrics = {_k:0.0 for _k,__ in scores[list(scores.keys())[0]].items()}
