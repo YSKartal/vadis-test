@@ -35,7 +35,10 @@ def install_local_package(folder_name):
 
 #install("pytrec_eval==0.5.2")
 
-install_local_package("pytrec_eval")
+import os
+os.system('pip install pytrec_eval')
+
+#install_local_package("pytrec_eval")
 
 
 
