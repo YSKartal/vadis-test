@@ -1,5 +1,11 @@
 import random
+from sklearn.metrics import precision_score, recall_score, f1_score
+from argparse import ArgumentParser
+import os
+import json
+from typing import List
 
+METRICS = {"f1": f1_score, "p": precision_score, "r": recall_score}
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
     print("Starting Evaluation.....")
@@ -39,10 +45,29 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             'submitted_at': u'2017-03-20T19:22:03.880652Z'
         }
     """
-    f = open(user_submission_file, "r")
-    line = f.readline()
-    ret = int(line)
-    f.close()
+
+    
+    with open(user_submission_file, "r") as f:
+        pred_json = json.load(f)
+
+    with open(test_annotation_file, "r") as f:
+        true_json = json.load(f)
+
+    pred_keys = sorted(list(pred_json.keys()))
+    true_keys = sorted(list(true_json.keys()))
+
+    assert pred_keys == true_keys
+
+    pred = [pred_json[k] for k in pred_keys]
+    true = [true_json[k] for k in true_keys]
+
+    metrics = {}
+    
+    if name in METRICS:
+        score = METRICS[name](y_pred=pred, y_true=true, average=avg, zero_division=False)
+        metrics[name] = score
+    
+    print(metrics)
     
 
     output = {}
@@ -51,9 +76,9 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         output["result"] = [
             {
                 "train_split": {
-                    "Metric1": random.randint(0, 99),
-                    "Metric2": random.randint(0, 99),
-                    "Metric3": ret,
+                    "Metric1": metrics["f1"],
+                    "Metric2": metrics["p"],
+                    "Metric3": metrics["r"],
                     "Total": random.randint(0, 99),
                 }
             }
