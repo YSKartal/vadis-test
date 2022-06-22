@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 import os
-os.system('pip install pytrec_eval')
+os.system('pip install pytrec-eval')
     
 import pytrec_eval
 import os
