@@ -63,7 +63,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
     metrics = {}
     
-    if name in METRICS:
+    for name in METRICS:
         score = METRICS[name](y_pred=pred, y_true=true, average=avg, zero_division=False)
         metrics[name] = score
     
