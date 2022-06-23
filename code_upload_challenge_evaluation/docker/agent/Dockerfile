@@ -5,5 +5,6 @@ ADD ./agent /
 ADD ./utils /
 ADD requirements/agent.txt /
 RUN pip install --upgrade pip
+RUN pip install pytrec_eval
 RUN pip install -r agent.txt
 CMD [ "python", "agent.py" ]
