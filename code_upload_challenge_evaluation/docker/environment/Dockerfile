@@ -5,5 +5,6 @@ ADD ./environment /
 ADD ./utils /
 ADD requirements/environment.txt /
 RUN pip install --upgrade pip
+RUN pip install pytrec_eval
 RUN pip install -r environment.txt
 CMD ["python", "environment.py"]
