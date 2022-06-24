@@ -4,6 +4,8 @@
 rm evaluation_script.zip
 rm challenge_config.zip
 
+pip install pytrec_eval
+
 # Create new zip configuration according the updated code
 cd evaluation_script
 zip -r ../evaluation_script.zip * -x "*.DS_Store"
