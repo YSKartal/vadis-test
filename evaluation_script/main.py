@@ -82,10 +82,10 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
     
     with open(user_submission_file, "r") as f:
-        run = json.load(f)
+        pred_json = json.load(f)
 
     with open(test_annotation_file, "r") as f:
-        qrels = json.load(f)
+        true_keys = json.load(f)
 
     pred_keys = sorted(list(run.keys()))
     true_keys = sorted(list(qrels.keys()))
