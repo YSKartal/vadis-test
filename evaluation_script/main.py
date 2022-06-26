@@ -120,6 +120,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     
     print(metrics)
 
+    
     '''metrics = {}
     for m in DEFAULT_METRICS:
         parts = m.split("@")
