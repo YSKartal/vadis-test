@@ -5,13 +5,15 @@ import sys
 import os
 os.system('pip install pytrec-eval')
     
-import pytrec_eval
+#import pytrec_eval
 import os
 import json
 from typing import Dict, Tuple, List
 from argparse import ArgumentParser
 
 DEFAULT_METRICS = ["map@20,50", "p@1,3,5,10,20", "r@1,3,5,10,20", "rprec"]
+METRICS = {"f1": f1_score, "p": precision_score, "r": recall_score}
+DEFAULT_METRICS = ["f1@macro", "p@macro", "r@macro"]
 
 def _evaluate(
     qrels: Dict[str, Dict[str, int]], 
@@ -79,7 +81,40 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     with open(test_annotation_file, "r") as f:
         qrels = json.load(f)
 
+    pred_keys = sorted(list(run.keys()))
+    true_keys = sorted(list(qrels.keys()))
+
+    assert pred_keys == true_keys
+
+    pred = [pred_json[k] for k in pred_keys]
+    true = [true_json[k] for k in true_keys]
+
     metrics = {}
+    for m in DEFAULT_METRICS:
+        parts = m.split("@")
+        if len(parts) == 2:
+            name = ""
+            avg = None
+
+            try:
+                name, avg = parts[0].lower(), parts[1]
+            except:
+                print(f"Invalid format for metric: {m}")
+
+            if name in METRICS:
+                score = METRICS[name](y_pred=pred, y_true=true, average=avg, zero_division=False)
+                metrics[name] = score
+
+        elif len(parts) == 1:
+            name = m.lower()
+
+            if name in METRICS:
+                score = METRICS[name](y_pred=pred, y_true=true, average=avg, zero_division=False)
+                metrics[name] = score
+    
+    print(metrics)
+
+    '''metrics = {}
     for m in DEFAULT_METRICS:
         parts = m.split("@")
         if len(parts) == 2:
@@ -104,7 +139,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
     scores = _evaluate(qrels, run, metrics)
     formatted_scores = {k.replace("_","@"): v for k,v in scores.items()}
-    print(formatted_scores)
+    print(formatted_scores)'''
     
     print(metrics)
     
