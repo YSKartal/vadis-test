@@ -11,6 +11,12 @@ import json
 from typing import Dict, Tuple, List
 from argparse import ArgumentParser
 
+from sklearn.metrics import precision_score, recall_score, f1_score
+from argparse import ArgumentParser
+import os
+import json
+from typing import List
+
 DEFAULT_METRICS = ["map@20,50", "p@1,3,5,10,20", "r@1,3,5,10,20", "rprec"]
 METRICS = {"f1": f1_score, "p": precision_score, "r": recall_score}
 DEFAULT_METRICS = ["f1@macro", "p@macro", "r@macro"]
@@ -150,9 +156,9 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         output["result"] = [
             {
                 "train_split": {
-                    "Metric1": metrics["recall@1"],
-                    "Metric2": metrics["recall@3"],
-                    "Metric3": metrics["recall@5"],
+                    "Metric1": metrics["f1"],
+                    "Metric2": metrics["p"],
+                    "Metric3": metrics["r"],
                     "Total": random.randint(0, 99),
                 }
             }
@@ -173,9 +179,9 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             },
             {
                 "test_split": {
-                    "Metric1": metrics["recall@1"],
-                    "Metric2": metrics["recall@3"],
-                    "Metric3": metrics["recall@5"],
+                    "Metric1": metrics["f1"],
+                    "Metric2": metrics["p"],
+                    "Metric3": metrics["r"],
                     "Total": random.randint(0, 99),
                 }
             },
