@@ -1,6 +1,6 @@
-from numba import njit, types
-from numba.typed import Dict as TypedDict
-from numba.typed import List as TypedList
+from .numba import njit, types
+from .numba.typed import Dict as TypedDict
+from .numba.typed import List as TypedList
 
 
 @njit(cache=True)
