@@ -5,6 +5,7 @@ rm evaluation_script.zip
 rm challenge_config.zip
 
 pip install pytrec_eval
+pip install ranx
 
 # Create new zip configuration according the updated code
 cd evaluation_script
