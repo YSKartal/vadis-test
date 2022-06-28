@@ -5,7 +5,7 @@ import sys
 #from .pytrec_eval import RelevanceEvaluator
 #from .ranxy import Qrels, Run, evaluate
 import os
-os.system('pip install ranx')
+os.system('pip install -m ranx')
 
 import ranx
     
