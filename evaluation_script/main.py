@@ -2,7 +2,7 @@ import random
 import subprocess
 import sys
 #import ranxy
-from .pytrec_eval import RelevanceEvaluator
+#from .pytrec_eval import RelevanceEvaluator
 from .ranxy import Qrels, Run, evaluate
 import os
 os.system('pip install pytrec-eval')
