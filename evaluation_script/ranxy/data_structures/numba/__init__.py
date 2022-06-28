@@ -29,7 +29,7 @@ from .misc.special import (
 from .core.errors import *
 
 # Re-export types itself
-import .core.types as types
+from .core.types import types
 
 # Re-export all type names
 from .core.types import *
@@ -46,17 +46,17 @@ from .np.ufunc import (vectorize, guvectorize, threading_layer,
 from .np.numpy_support import carray, farray, from_dtype
 
 # Re-export experimental
-from numba import experimental
+from .experimental import *
 
 # Initialize withcontexts
-import numba.core.withcontexts
+#import numba.core.withcontexts
 from .core.withcontexts import objmode_context as objmode
 
 # Initialize target extensions
-import .core.target_extension
+from .core.target_extension import *
 
 # Initialize typed containers
-import .typed
+from .typed import *
 
 # Keep this for backward compatibility.
 def test(argv, **kwds):
