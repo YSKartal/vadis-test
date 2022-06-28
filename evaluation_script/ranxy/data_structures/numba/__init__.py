@@ -8,7 +8,7 @@ import sys
 import warnings
 
 from ._version import get_versions
-from numba.misc.init_utils import generate_version_info
+from .misc.init_utils import generate_version_info
 
 __version__ = get_versions()['version']
 version_info = generate_version_info(__version__)
@@ -16,47 +16,47 @@ del get_versions
 del generate_version_info
 
 
-from numba.core import config
-from numba.core import types, errors
+from .core import config
+from .core import types, errors
 
 # Re-export typeof
-from numba.misc.special import (
+from .misc.special import (
     typeof, prange, pndindex, gdb, gdb_breakpoint, gdb_init,
     literally, literal_unroll,
 )
 
 # Re-export error classes
-from numba.core.errors import *
+from .core.errors import *
 
 # Re-export types itself
-import numba.core.types as types
+import .core.types as types
 
 # Re-export all type names
-from numba.core.types import *
+from .core.types import *
 
 # Re-export decorators
-from numba.core.decorators import (cfunc, generated_jit, jit, njit, stencil,
+from .core.decorators import (cfunc, generated_jit, jit, njit, stencil,
                                    jit_module)
 
 # Re-export vectorize decorators and the thread layer querying function
-from numba.np.ufunc import (vectorize, guvectorize, threading_layer,
+from .np.ufunc import (vectorize, guvectorize, threading_layer,
                             get_num_threads, set_num_threads)
 
 # Re-export Numpy helpers
-from numba.np.numpy_support import carray, farray, from_dtype
+from .np.numpy_support import carray, farray, from_dtype
 
 # Re-export experimental
 from numba import experimental
 
 # Initialize withcontexts
 import numba.core.withcontexts
-from numba.core.withcontexts import objmode_context as objmode
+from .core.withcontexts import objmode_context as objmode
 
 # Initialize target extensions
-import numba.core.target_extension
+import .core.target_extension
 
 # Initialize typed containers
-import numba.typed
+import .typed
 
 # Keep this for backward compatibility.
 def test(argv, **kwds):
