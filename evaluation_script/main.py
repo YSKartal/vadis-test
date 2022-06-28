@@ -1,7 +1,7 @@
 import random
 import subprocess
 import sys
-import ranxy
+#import ranxy
 from ranxy import Qrels, Run, evaluate
 import os
 os.system('pip install pytrec-eval')
