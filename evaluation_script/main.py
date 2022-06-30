@@ -6,7 +6,7 @@ from torch import tensor
 #from .pytrec_eval import RelevanceEvaluator
 #from .ranxy import Qrels, Run, evaluate
 import os
-os.system('pip install -m ranx')
+os.system('pip install torch')
 
 #import ranx
     
