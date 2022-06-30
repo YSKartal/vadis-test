@@ -2,8 +2,22 @@ import ctypes
 import os
 import threading
 
-from llvmlite.binding.common import _decode_string, _is_shutting_down
-from llvmlite.utils import get_library_name
+from .common import _decode_string, _is_shutting_down
+
+
+def get_library_name():
+    """
+    Return the name of the llvmlite shared library file.
+    """
+    if os.name == 'posix':
+        if sys.platform == 'darwin':
+            return 'libllvmlite.dylib'
+        else:
+            return 'libllvmlite.so'
+    else:
+        assert os.name == 'nt'
+        return 'llvmlite.dll'
+
 
 
 def _make_opaque_ref(name):
