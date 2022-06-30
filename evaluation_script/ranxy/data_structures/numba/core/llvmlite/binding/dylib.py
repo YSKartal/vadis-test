@@ -1,7 +1,10 @@
 from ctypes import c_void_p, c_char_p, c_bool, POINTER
 
-from llvmlite.binding import ffi
-from llvmlite.binding.common import _encode_string
+#from llvmlite.binding import ffi
+#from llvmlite.binding.common import _encode_string
+
+from .ffi import *
+from .common import _encode_string
 
 
 def address_of_symbol(name):
