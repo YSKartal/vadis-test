@@ -10,7 +10,7 @@ def get_library_name():
     Return the name of the llvmlite shared library file.
     """
     
-    assert os.name == 'nt'
+    #assert os.name == 'nt'
     return 'llvmlite.dll'
 
 
