@@ -12,7 +12,7 @@ except ImportError:
     _HAVE_YAML = False
 
 
-import llvmlite.binding as ll
+import .llvmlite.binding as ll
 
 
 IS_WIN32 = sys.platform.startswith('win32')
