@@ -4,11 +4,10 @@ import sys
 from torch import tensor
 #import ranxy
 #from .pytrec_eval import RelevanceEvaluator
-from .ranxy import Qrels, Run, evaluate
+#from .ranxy import Qrels, Run, evaluate
 import os
 os.system('pip install -m ranx')
 
-import ranx
 #import ranx
     
 #import pytrec_eval
