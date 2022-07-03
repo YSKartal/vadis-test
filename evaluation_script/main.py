@@ -1,10 +1,10 @@
 import random
 import subprocess
 import sys
-from torch import tensor
+#from torch import tensor
 #import ranxy
 #from .pytrec_eval import RelevanceEvaluator
-#from .ranxy import Qrels, Run, evaluate
+from .ranxy import Qrels, Run, evaluate
 import os
 os.system('pip install torch')
 
